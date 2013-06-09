@@ -43,21 +43,19 @@
 	"commands": {
 		"save-bookmark": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+K",
-				"mac": "Command+Shift+K"
+				"default": "Ctrl+Shift+K"
 			},
 			"description": "Save Bookmark"
 		},
 		"quick-save-bookmark": {
 			"suggested_key": {
-				"default": "Ctrl+D"
+				"default": "Ctrl+Shift+Q"
 			},
 			"description": "Quick Save Bookmark"
 		},
 		"read-later": {
 			"suggested_key": {
-				"default": "Ctrl+Shift+L",
-				"mac": "Command+Shift+L"
+				"default": "Ctrl+Shift+L"
 			},
 			"description": "Read Later"
 		}
