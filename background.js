@@ -161,19 +161,19 @@ function addPost(url, title, description, isPublic, isReadLater, /* private: */ 
 	if (settings.showDesktopNotifications === "yes") {
 		request.done(function(data) {
 			if (data.result_code === "done") {
-				var notification = new Notification("Saved Read Later", { icon: "icon_48.png" });
+				var notification = new Notification("Saved Link", { icon: "icon_48.png" });
 				notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 				notification.onclick = function() { notification.cancel(); };
 				notification.show();
 			}
 			else {
-				var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: "Error: " + data.result_code });
+				var notification = new Notification("Error Saving Link", { icon: "icon_48.png", body: "Error: " + data.result_code });
 				notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 				notification.onclick = function() { notification.cancel(); };
 				notification.show();
 			}
 		}).fail(function(jqxhr) {
-			var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: jqxhr.status + " " + jqxhr.statusText + ": " + jqxhr.responseText });
+			var notification = new Notification("Error Saving Link", { icon: "icon_48.png", body: jqxhr.status + " " + jqxhr.statusText + ": " + jqxhr.responseText });
 			notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 			notification.onclick = function() { notification.cancel(); };
 			notification.show();
