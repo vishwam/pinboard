@@ -87,7 +87,18 @@ function popularBookmarks() {
 }
 
 function saveBookmark() {
-	chrome.tabs.executeScript({file: "save_bookmark.js"});
+	chrome.tabs.executeScript({ code: getPageInfoFnStr }, function(arr) {
+		if (arr && arr[0]) {
+			var page = arr[0];
+			window.open(
+				'https://pinboard.in/add' 
+				+ '?url='+encodeURIComponent(page.url)	
+				+ '&title='+encodeURIComponent(page.title).substr(0, 256)
+				+ '&description='+encodeURIComponent(page.selection).substr(0, 65536),
+				'Pinboard',
+				'toolbar=no,width=700,height=350');
+		}
+	});
 }
 
 function addPost(url, title, description, isPublic, isReadLater, /* private: */ _tags) {
