@@ -1,3 +1,4 @@
+<!DOCTYPE html> 
 <html>
 	<head>
 		<title>Pinboard Options</title>
@@ -151,10 +152,10 @@
 				<div class="table">
 					<div class="table-header">User</div>
 					<div class="table-row">
-						<div class="table-cell"><span>API Token:</span><span><input type="text" id="api-token" size="45" placeholder="username:ABCDEFGHIJ0123456789"/></span></div>
+						<div class="table-cell"><label for="api-token">API Token:</label><input type="text" id="api-token" size="45" placeholder="username:ABCDEFGHIJ0123456789" pattern="^.*?:.*$"/></div>
 					</div>
 					<div class="table-row">
-						<div class="table-cell"><span>Find your API token on your <a href="https://pinboard.in/settings/password" target="_blank">pinboard settings password</a> page.</span></div>
+						<div class="table-cell">Find your API token on your <a href="https://pinboard.in/settings/password" target="_blank">pinboard settings password</a> page.</div>
 					</div>
 				</div>
 			</form>
@@ -164,13 +165,13 @@
 				<div class="table">
 					<div class="table-header">General</div>
 					<div class="table-row">
-						<div class="table-cell"><input type="checkbox" id="always-open-new-tabs" />Always open new tabs</div>
+						<div class="table-cell"><input type="checkbox" id="always-open-new-tabs" /><label for="always-open-new-tabs">Always open new tabs.</label></div>
 					</div>
 					<div class="table-row">
-						<div class="table-cell"><input type="checkbox" id="show-desktop-notifications" />Show desktop notifications</div>
+						<div class="table-cell"><input type="checkbox" id="show-desktop-notifications" /><label for="show-desktop-notifications">Show desktop notifications.</label></div>
 					</div>
 					<div class="table-row">
-						<div class="table-cell"><input type="checkbox" id="auto-fill-tags" />Set tags automatically</div>
+						<div class="table-cell"><input type="checkbox" id="auto-fill-tags" /><label for="auto-fill-tags" title="Popular and recommended tags for the page will automatically be filled in when adding it to pinboard.">Fill in tags for Read Later and Quick Save actions automatically.</label></div>
 					</div>
 				</div>
 			</form>
