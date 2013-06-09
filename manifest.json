@@ -48,6 +48,12 @@
 			},
 			"description": "Save Bookmark"
 		},
+		"quick-save-bookmark": {
+			"suggested_key": {
+				"default": "Ctrl+D",
+			},
+			"description": "Quick Save Bookmark"
+		},
 		"read-later": {
 			"suggested_key": {
 				"default": "Ctrl+Shift+L",

@@ -199,6 +199,15 @@ function readLater() {
 	});
 }
 
+function quickSaveBookmark() {
+	chrome.tabs.executeScript({ code: getPageInfoFnStr }, function(arr) {
+		if (arr && arr[0]) {
+			var page = arr[0];
+			addPost(page.url, page.title, page.selection, /* isPublic: */ "yes", /* isReadLater: */ "no");
+		}
+	});
+}
+
 function addNote() {
 	openUrl("https://pinboard.in/note/add/");
 }
@@ -210,6 +219,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 		else if ("read-later" == command) {
 			readLater();
+		}
+		else if ("quick-save-bookmark" === command) {
+			quickSaveBookmark();
 		}
 	});
 	
