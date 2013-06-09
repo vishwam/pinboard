@@ -50,7 +50,7 @@
 		},
 		"quick-save-bookmark": {
 			"suggested_key": {
-				"default": "Ctrl+D",
+				"default": "Ctrl+D"
 			},
 			"description": "Quick Save Bookmark"
 		},
