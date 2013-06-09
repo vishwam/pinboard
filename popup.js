@@ -24,9 +24,9 @@ function addMenuItems() {
 	else {
 		var len = options.menuItems.length;
 		if (0 == len) {
-            addMenuItem("Setup Menu Items", function () { chrome.extension.getBackgroundPage().showOptions(); closePopups(); });
-        } 
-        else {
+			addMenuItem("Setup Menu Items", function () { chrome.extension.getBackgroundPage().showOptions(); closePopups(); });
+		}
+		else {
 			var allMenuItems = chrome.extension.getBackgroundPage().getAllMenuItems();
 			for (var i=0; i<len; ++i) {
 				var menuItem = options.menuItems[i];						

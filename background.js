@@ -1,7 +1,7 @@
 var cachedSettings = null;
 
 function getSettings() {
-    return cachedSettings;
+	return cachedSettings;
 }
 
 function setSettings(settings) {
@@ -96,7 +96,7 @@ function readLater() {
 			contentType: "text/plain",
 			crossDomain: true,
 			data: {
-		    	auth_token: getSettings().apiToken,
+				auth_token: getSettings().apiToken,
 				url: tab.url,
 				description: tab.title,
 				shared: "no",
@@ -105,7 +105,7 @@ function readLater() {
 			dataType: "json",
 			timeout: 10 * 1000,
 			type: "GET",
-            url: "https://api.pinboard.in/v1/posts/add"
+			url: "https://api.pinboard.in/v1/posts/add"
 		}).always(function (data) {
 			if (200 == data.status) {
 				var result = $(data.responseXML).find("result").attr("code");
@@ -117,35 +117,35 @@ function readLater() {
 						notification.show();
 					}
 				}
-				else {	
+				else {
 					var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: "Error: " + result });
 					notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 					notification.onclick = function() { notification.cancel(); };
 					notification.show();
 				}
 			}
-			else {	
+			else {
 				var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: data.statusText });
 				notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 				notification.onclick = function() { notification.cancel(); };
 				notification.show();
 			}
-		});	
+		});
 	});
 }
 
-function addNote() {    
+function addNote() {
 	openUrl("https://pinboard.in/note/add/");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
 	chrome.commands.onCommand.addListener(function(command) {
 		if ("save-bookmark" == command) {
-	  		saveBookmark();
-	  	}
-	  	else if ("read-later" == command) {
-	  		readLater();
-	  	}
+			saveBookmark();
+		}
+		else if ("read-later" == command) {
+			readLater();
+		}
 	});
 	
 	setSettings(getSettingsFromLocalStorage());

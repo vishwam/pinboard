@@ -6,17 +6,17 @@ function Settings() {
 }
 
 function getValueFromLocalStorage(name, defaultValue) {
-    var value = localStorage.getItem(name);		
-    return value ? value : defaultValue;
+	var value = localStorage.getItem(name);		
+	return value ? value : defaultValue;
 }
 
 function setValueInLocalStorage(name, value) {	
-    if (value) {
-        localStorage.setItem(name, value);
-    }
-    else {
-        localStorage.removeItem(name);
-    }
+	if (value) {
+		localStorage.setItem(name, value);
+	}
+	else {
+		localStorage.removeItem(name);
+	}
 }
 
 function getArrayValuesFromLocalStorage(name, defaultValue) {	
@@ -39,7 +39,7 @@ function getSettingsFromLocalStorage() {
 	settings.alwaysOpenNewTabs = getValueFromLocalStorage("alwaysOpenNewTabs", "no");
 	settings.showDesktopNotifications = getValueFromLocalStorage("showDesktopNotifications", "yes");
 	settings.menuItems = getArrayValuesFromLocalStorage("menuItems", []);
-	return settings;	
+	return settings;
 }
 
 function setSettingsInLocalStorage(settings) {
