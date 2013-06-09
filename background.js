@@ -170,9 +170,21 @@ function addPost(url, title, description, isPublic, isReadLater, /* private: */ 
 	}
 } // end addPost();
 
+var getPageInfoFnStr = "(" + function() { 
+	// function that will execute in context of the active tab:
+	return {
+		url: location.href,
+		title: document.title,
+		selection: window.getSelection().toString()
+	};
+}.toString() + ")();"; // execute function when eval'd.
+
 function readLater() {
-	chrome.tabs.getSelected(null , function(tab) {
-		addPost(tab.url, tab.title, '', "no", "yes");
+	chrome.tabs.executeScript({ code: getPageInfoFnStr }, function(arr) {
+		if (arr && arr[0]) {
+			var page = arr[0];
+			addPost(page.url, page.title, page.selection, "no", "yes");
+		}
 	});
 }
 
