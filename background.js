@@ -90,47 +90,89 @@ function saveBookmark() {
 	chrome.tabs.executeScript({file: "save_bookmark.js"});
 }
 
-function readLater() {
-	chrome.tabs.getSelected(null , function(tab) {
+function addPost(url, title, description, isPublic, isReadLater, /* private: */ _tags) {
+	var settings = getSettings();
+	var tags = _tags || [];
+	
+	// check if tags should be automatically fetched:
+	if (!_tags && settings.autoFillTags === "yes") {
 		$.ajax({
+			data: {
+				auth_token: settings.apiToken,
+				url: url,
+				format: "json"
+			},
 			contentType: "text/plain",
 			crossDomain: true,
-			data: {
-				auth_token: getSettings().apiToken,
-				url: tab.url,
-				description: tab.title,
-				shared: "no",
-				toread: "yes"
-			},
 			dataType: "json",
 			timeout: 10 * 1000,
 			type: "GET",
-			url: "https://api.pinboard.in/v1/posts/add"
-		}).always(function (data) {
-			if (200 == data.status) {
-				var result = $(data.responseXML).find("result").attr("code");
-				if ("done" == result) {
-					if ("yes" == getSettings().showDesktopNotifications) {
-						var notification = new Notification("Saved Read Later", { icon: "icon_48.png" });
-						notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
-						notification.onclick = function() { notification.cancel(); };
-						notification.show();
-					}
-				}
-				else {
-					var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: "Error: " + result });
-					notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
-					notification.onclick = function() { notification.cancel(); };
-					notification.show();
+			url: "https://api.pinboard.in/v1/posts/suggest"
+		}).done(function(data) {
+			for (var i in data) {
+				var map = data[i].popular || data[i].recommended;
+				for (var j in map) {
+					tags.push(map[j]);
 				}
 			}
-			else {
-				var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: data.statusText });
+		}).always(function() {
+			// recurse with tags present:
+			addPost(url, title, description, isPublic, isReadLater, tags);
+		});
+		
+		return;
+	}
+	
+	// truncate tags if above pinboard limits:
+	if (tags.length > 100) {
+		tags.length = 100;
+	}
+	
+	var request = $.ajax({
+		data: {
+			auth_token: settings.apiToken,
+			url: url,
+			description: title.substr(0, 256),
+			extended: description.substr(0, 65536),
+			tags: tags.join(','),
+			shared: isPublic,
+			toread: isReadLater,
+			format: "json"
+		},
+		contentType: "text/plain",
+		crossDomain: true,
+		dataType: "json",
+		timeout: 10 * 1000,
+		type: "GET",
+		url: "https://api.pinboard.in/v1/posts/add"
+	});
+	
+	if (settings.showDesktopNotifications === "yes") {
+		request.done(function(data) {
+			if (data.result_code === "done") {
+				var notification = new Notification("Saved Read Later", { icon: "icon_48.png" });
 				notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
 				notification.onclick = function() { notification.cancel(); };
 				notification.show();
 			}
+			else {
+				var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: "Error: " + data.result_code });
+				notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
+				notification.onclick = function() { notification.cancel(); };
+				notification.show();
+			}
+		}).fail(function(jqxhr) {
+			var notification = new Notification("Error Saving Read Later", { icon: "icon_48.png", body: jqxhr.status + " " + jqxhr.statusText + ": " + jqxhr.responseText });
+			notification.onshow = function() { setTimeout(function(){ notification.cancel(); }, 5000); };
+			notification.onclick = function() { notification.cancel(); };
+			notification.show();
 		});
+	}
+} // end addPost();
+
+function readLater() {
+	chrome.tabs.getSelected(null , function(tab) {
+		addPost(tab.url, tab.title, '', "no", "yes");
 	});
 }
 

@@ -49,6 +49,7 @@ function loadSettings() {
 	setTextValue("api-token", settings.apiToken);
 	setCheckboxState("always-open-new-tabs", settings.alwaysOpenNewTabs);
 	setCheckboxState("show-desktop-notifications", settings.showDesktopNotifications);
+	setCheckboxState("auto-fill-tags", settings.autoFillTags);
 	setMenuItems(settings.menuItems);
 }
 
@@ -61,6 +62,7 @@ function saveSettings() {
 	settings.apiToken = getTextValue("api-token");
 	settings.alwaysOpenNewTabs = getCheckboxState("always-open-new-tabs");
 	settings.showDesktopNotifications = getCheckboxState("show-desktop-notifications");
+	settings.autoFillTags = getCheckboxState("auto-fill-tags");
 	settings.menuItems = getMenuItems("active-menu-items");
 	setSettingsInLocalStorage(settings);
 	chrome.extension.getBackgroundPage().setSettings(settings);

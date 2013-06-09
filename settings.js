@@ -2,6 +2,7 @@ function Settings() {
 	this.apiToken = "";
 	this.alwaysOpenNewTabs = "no";
 	this.showDesktopNotifications = "yes";
+	this.autoFillTags = "no";
 	this.menuItems = [];
 }
 
@@ -38,6 +39,7 @@ function getSettingsFromLocalStorage() {
 	settings.apiToken = getValueFromLocalStorage("apiToken", "");
 	settings.alwaysOpenNewTabs = getValueFromLocalStorage("alwaysOpenNewTabs", "no");
 	settings.showDesktopNotifications = getValueFromLocalStorage("showDesktopNotifications", "yes");
+	settings.autoFillTags = getValueFromLocalStorage("autoFillTags", "no");
 	settings.menuItems = getArrayValuesFromLocalStorage("menuItems", []);
 	return settings;
 }
@@ -46,5 +48,6 @@ function setSettingsInLocalStorage(settings) {
 	setValueInLocalStorage("apiToken", settings.apiToken);
 	setValueInLocalStorage("alwaysOpenNewTabs", settings.alwaysOpenNewTabs);
 	setValueInLocalStorage("showDesktopNotifications", settings.showDesktopNotifications);
+	setValueInLocalStorage("autoFillTags", settings.autoFillTags);
 	setArrayValuesInLocalStorage("menuItems", settings.menuItems);
 }
